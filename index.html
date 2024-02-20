@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI and Plagiarism REMOVER</title>
+  <title>Plagiarism and AI REMOVER</title>
   <style>
     input {
       width: 100%;
@@ -18,16 +18,16 @@
 </head>
 <body>
 
-  <label for="inputSentence">Enter your text:</label>
+  <label for="inputSentence">Enter a sentence:</label>
   <input type="text" id="inputSentence" placeholder="Type your sentence here">
 
-  <button onclick="addSoftHyphen()">Remove!</button>
+  <button onclick="addSpecialCharacters()">Remove!</button>
   <button id="copyButton" onclick="copyToClipboard()" style="display: none;">Copy to Clipboard</button>
 
   <p id="outputSentence"></p>
 
   <script>
-    function addSoftHyphen() {
+    function addSpecialCharacters() {
       const inputSentence = document.getElementById('inputSentence').value;
       const outputSentence = processInputSentence(inputSentence);
       const outputSentenceElement = document.getElementById('outputSentence');
@@ -45,21 +45,24 @@
         const word = words[i];
 
         // Add soft hyphen after a random letter in each word
-        const wordWithHyphen = insertSoftHyphenRandomly(word);
+        const wordWithHyphen = insertSpecialCharacterRandomly(word, '\u00AD');
+
+        // Add combining grapheme joiner after a random letter in each word
+        const wordWithGraphemeJoiner = insertSpecialCharacterRandomly(wordWithHyphen, '\u034F');
 
         // Replace space with three-per-em space every two words
         const separator = (i % 2 === 0 && i > 0) ? '\u2004' : ' ';
 
-        processedWords.push(wordWithHyphen + separator);
+        processedWords.push(wordWithGraphemeJoiner + separator);
       }
 
       // Join the processed words to form the final sentence
       return processedWords.join('');
     }
 
-    function insertSoftHyphenRandomly(word) {
+    function insertSpecialCharacterRandomly(word, character) {
       const randomIndex = Math.floor(Math.random() * (word.length + 1));
-      return word.slice(0, randomIndex) + '\u00AD' + word.slice(randomIndex);
+      return word.slice(0, randomIndex) + character + word.slice(randomIndex);
     }
 
     function copyToClipboard() {
