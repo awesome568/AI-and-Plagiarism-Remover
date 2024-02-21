@@ -44,16 +44,13 @@
       for (let i = 0; i < words.length; i++) {
         const word = words[i];
 
-        // Add soft hyphen after a random letter in each word
-        const wordWithHyphen = insertSpecialCharacterRandomly(word, '\u00AD');
-
-        // Add combining grapheme joiner after a random letter in each word
-        const wordWithGraphemeJoiner = insertSpecialCharacterRandomly(wordWithHyphen, '\u034F');
+        // Add zero-width non-joiner after a random letter in each word
+        const wordWithNonJoiner = insertSpecialCharacterRandomly(word, '\u200C');
 
         // Replace space with three-per-em space every two words
         const separator = (i % 2 === 0 && i > 0) ? '\u2004' : ' ';
 
-        processedWords.push(wordWithGraphemeJoiner + separator);
+        processedWords.push(wordWithNonJoiner + separator);
       }
 
       // Join the processed words to form the final sentence
@@ -77,5 +74,5 @@
   </script>
 
 </body>
-  <i>This will bypass every ai and plagarism detector, as well as google classroom's originality reports. !I am not accountable if anyone gets in trouble for using this!. Made by awesome231</i>
+  <i>This will bypass every AI and plagiarism detector, as well as Google Classroom's originality reports. I am not accountable if anyone gets in trouble for using this. Made by awesome231</i>
 </html>
